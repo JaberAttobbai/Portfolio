@@ -2,8 +2,10 @@ import { ContentData, SocialLink } from './types';
 
 export const SOCIAL_LINKS: SocialLink[] = [
   { platform: "LinkedIn", url: "https://linkedin.com/in/jaber-attobbai", icon: "linkedin" },
-  { platform: "Email", url: "mailto:jabermahyoub@gmail.com", icon: "mail" },
-  { platform: "GitHub", url: "https://github.com", icon: "github" },
+  { platform: "Email", url: 'mailto:jabermahyoub@gmail.com', icon: "mail" },
+  { platform: "GitHub", url: "https://github.com/jaberattobbai", icon: "github" },
+  { platform: "WhatsApp", url: "https://wa.me/+967778102165", icon: "whatsapp" },
+  
 ];
 
 const ENGLISH_CONTENT: ContentData = {

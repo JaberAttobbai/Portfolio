@@ -18,16 +18,20 @@ const About: React.FC = () => {
 
   return (
     <Section id="about" title={content.about.title} subtitle="true" className="bg-darker">
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6 text-slate-300 leading-relaxed text-lg">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="space-y-4 md:space-y-6 text-slate-300 leading-relaxed text-base md:text-lg">
           {content.about.text.split('\n\n').map((paragraph, index) => (
             <p key={index}>{paragraph.trim()}</p>
           ))}
           
           <div className="pt-6">
-            <button className="px-6 py-2 border border-primary text-primary hover:bg-primary/10 rounded transition-colors">
+            <a 
+              href="/cv/Jaber Farhan - Software Engineer _ Web Developer - CV (1).pdf" 
+              download="Jaber_Farhan_CV.pdf"
+              className="px-6 py-2 border border-primary text-primary hover:bg-primary/10 rounded transition-colors inline-block"
+            >
               {content.about.resumeBtn}
-            </button>
+            </a>
           </div>
         </div>
 

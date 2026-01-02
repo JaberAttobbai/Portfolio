@@ -8,7 +8,7 @@ const Projects: React.FC = () => {
 
   return (
     <Section id="projects" title={content.projects.title} subtitle="true" className="bg-darker">
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {content.projects.list.map((project) => (
           <div key={project.id} className="group bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1">
             <div className="relative h-48 overflow-hidden">
