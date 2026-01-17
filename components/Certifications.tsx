@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Section from './ui/Section';
 import { Award, ExternalLink, Filter } from 'lucide-react';
 import { CERTIFICATIONS } from '../constants/certifications';
@@ -41,8 +41,8 @@ const Certifications: React.FC = () => {
                             key={provider}
                             onClick={() => setSelectedProvider(provider)}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedProvider === provider
-                                    ? 'bg-gradient-primary text-white shadow-lg scale-105'
-                                    : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:text-white'
+                                ? 'bg-gradient-primary text-white shadow-lg scale-105'
+                                : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:text-white'
                                 }`}
                         >
                             {provider}
@@ -51,67 +51,73 @@ const Certifications: React.FC = () => {
                 </motion.div>
 
                 {/* Certifications Grid */}
-                <motion.div
-                    className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                    variants={staggerContainer}
-                >
-                    {filteredCerts.map((cert, index) => (
-                        <motion.div
-                            key={cert.id}
-                            variants={scaleIn}
-                            whileHover={{ scale: 1.03, y: -5 }}
-                            className="group bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-primary/50 transition-all duration-300 relative overflow-hidden"
-                            style={{
-                                boxShadow: 'var(--shadow-md)',
-                            }}
-                        >
-                            {/* Provider Badge */}
-                            <div className="absolute top-0 right-0 p-3">
-                                <div className={`bg-gradient-to-r ${getProviderColor(cert.provider)} w-2 h-2 rounded-full`} />
-                            </div>
-
-                            {/* Icon */}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={selectedProvider}
+                        className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                    >
+                        {filteredCerts.map((cert, index) => (
                             <motion.div
-                                className="mb-4 inline-flex p-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-lg"
-                                whileHover={{ rotate: 360 }}
-                                transition={{ duration: 0.6 }}
+                                key={cert.id}
+                                variants={scaleIn}
+                                whileHover={{ scale: 1.03, y: -5 }}
+                                className="group bg-slate-800 rounded-xl p-6 border border-slate-700 hover:border-primary/50 transition-all duration-300 relative overflow-hidden"
+                                style={{
+                                    boxShadow: 'var(--shadow-md)',
+                                }}
                             >
-                                <Award className="w-6 h-6 text-primary" />
-                            </motion.div>
-
-                            {/* Content */}
-                            <h3 className="text-base font-semibold text-white mb-2 line-clamp-2 min-h-[3rem] group-hover:text-primary transition-colors">
-                                {cert.name}
-                            </h3>
-
-                            <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-700/50">
-                                <div>
-                                    <p className="text-xs text-slate-400 mb-1">Provider</p>
-                                    <p className="text-sm font-medium text-slate-200">{cert.provider}</p>
+                                {/* Provider Badge */}
+                                <div className="absolute top-0 right-0 p-3">
+                                    <div className={`bg-gradient-to-r ${getProviderColor(cert.provider)} w-2 h-2 rounded-full`} />
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-xs text-slate-400 mb-1">Year</p>
-                                    <p className="text-sm font-medium text-slate-200">{cert.year}</p>
-                                </div>
-                            </div>
 
-                            {cert.credentialUrl && (
-                                <motion.a
-                                    href={cert.credentialUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mt-3 flex items-center gap-1 text-xs text-primary hover:text-blue-400 transition-colors"
-                                    whileHover={{ x: 3 }}
+                                {/* Icon */}
+                                <motion.div
+                                    className="mb-4 inline-flex p-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-lg"
+                                    whileHover={{ rotate: 360 }}
+                                    transition={{ duration: 0.6 }}
                                 >
-                                    View Credential <ExternalLink className="w-3 h-3" />
-                                </motion.a>
-                            )}
+                                    <Award className="w-6 h-6 text-primary" />
+                                </motion.div>
 
-                            {/* Hover Effect Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                        </motion.div>
-                    ))}
-                </motion.div>
+                                {/* Content */}
+                                <h3 className="text-base font-semibold text-white mb-2 line-clamp-2 min-h-[3rem] group-hover:text-primary transition-colors">
+                                    {cert.name}
+                                </h3>
+
+                                <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-700/50">
+                                    <div>
+                                        <p className="text-xs text-slate-400 mb-1">Provider</p>
+                                        <p className="text-sm font-medium text-slate-200">{cert.provider}</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-xs text-slate-400 mb-1">Year</p>
+                                        <p className="text-sm font-medium text-slate-200">{cert.year}</p>
+                                    </div>
+                                </div>
+
+                                {cert.credentialUrl && (
+                                    <motion.a
+                                        href={cert.credentialUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-3 flex items-center gap-1 text-xs text-primary hover:text-blue-400 transition-colors"
+                                        whileHover={{ x: 3 }}
+                                    >
+                                        View Credential <ExternalLink className="w-3 h-3" />
+                                    </motion.a>
+                                )}
+
+                                {/* Hover Effect Overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </AnimatePresence>
 
                 {/* Summary Stats */}
                 <motion.div
